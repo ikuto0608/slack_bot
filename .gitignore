@@ -22,7 +22,7 @@ pickle-email-*.html
 .LSOverride
 Icon
 manifest.yml
-
+.env
 # Thumbnails
 ._*
 
