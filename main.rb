@@ -62,9 +62,9 @@ def up_down_check(unix_now)
         as_user: true,
         attachments: [{
           pretext: "It's happening!",
-				  title: "#{coin_name} has changed.",
-				  color: 'good',
-				  fields: [
+          title: "#{coin_name} has changed.",
+          color: 'good',
+          fields: [
           {
             title: "#{coin_name}",
             value: "",
