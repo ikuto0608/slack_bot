@@ -66,20 +66,20 @@ def up_down_check(unix_now)
 				  color: 'good',
 				  fields: [
           {
-					  title: "#{coin_name}",
-					  value: "",
-					  short: false
-					},
+            title: "#{coin_name}",
+            value: "",
+            short: false
+          },
           {
             title: latest_history['price'],
             value: Time.at(unix_now).to_datetime,
             short: true
           },
-					{
-					  title: "",
-					  value: "",
-					  short: true
-					}
+          {
+            title: "",
+            value: "",
+            short: true
+          }
 				  ]
         }]
       )
