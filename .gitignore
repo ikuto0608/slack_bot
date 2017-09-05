@@ -6,3 +6,4 @@ vendor
 .project
 .DS_Store
 .env
+Procfile
