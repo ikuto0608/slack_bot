@@ -19,6 +19,7 @@ end
 ## crawl coin market
 ######################
 def crawl_coin_market(unix_now)
+  puts "crawl coin market..."
   coin_market = Nokogiri::HTML(open(ENV['COINMARKET_URL']))
   rows = coin_market.xpath('//table/tbody/tr')
   rows.each do |row|
@@ -37,6 +38,7 @@ end
 ## up down check and slack it
 ######################
 def up_down_check(unix_now)
+  puts "up down check and slack it..."
   keys = redis.scan_each(:match => "*:#{unix_now}").to_a
   coin_names = keys.map{|key| key.chomp(":#{unix_now}") }
   attachments = []
@@ -121,7 +123,9 @@ end
 scheduler = Rufus::Scheduler.new
 # every 5 minutes
 scheduler.cron '*/5 * * * *' do
+  puts "Job start: #{Time.now.to_s}"
   unix_now = Time.now.to_i
   crawl_coin_market(unix_now)
   up_down_check(unix_now)
+  puts "Job end: #{Time.now.to_s}"
 end

@@ -1,3 +1,5 @@
+$stdout.sync = true
+
 require 'bundler'
 Bundler.require
 require 'dotenv/load'
