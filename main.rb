@@ -23,19 +23,19 @@ def crawl_coin_market(unix_now)
   coin_market = Nokogiri::HTML(open(ENV['COINMARKET_URL']))
   rows = coin_market.xpath('//table/tbody/tr')
 
-  redis.multi
-  rows.each do |row|
-    coin_hash = ATTTRIBUTES.inject({}) do |hash, attribute|
-      hash.merge!(
-        { "#{attribute.gsub('-', '_')}".to_sym => row.at_css('.' + attribute).text.strip }
-      )
-      hash
-    end
+  redis.pipelined do
+    rows.each do |row|
+      coin_hash = ATTTRIBUTES.inject({}) do |hash, attribute|
+        hash.merge!(
+          { "#{attribute.gsub('-', '_')}".to_sym => row.at_css('.' + attribute).text.strip }
+        )
+        hash
+      end
 
-    redis.set("#{coin_hash[:currency_name]}:#{unix_now}", coin_hash.to_json)
+      redis.set("#{coin_hash[:currency_name]}:#{unix_now}", coin_hash.to_json)
+    end
   end
-  redis.exec
-  
+
 end
 
 ######################
