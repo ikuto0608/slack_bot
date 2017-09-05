@@ -94,7 +94,7 @@ def up_down_check(unix_now)
 
   client = Slack::Web::Client.new
   client.chat_postMessage(
-    channel: "#coins_news",
+    channel: ENV['CHANNEL'],
     as_user: true,
     attachments: attachments
   )
