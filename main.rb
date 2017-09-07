@@ -10,6 +10,7 @@ require 'slack-ruby-client'
 require "redis"
 
 ATTTRIBUTES = ['currency-name', 'market-cap', 'price', 'volume', 'percent-24h']
+LIMIT_SEC_FOR_25M = 331200
 
 Slack.configure do |config|
   config.token = ENV['SLACK_API_TOKEN']
@@ -23,8 +24,6 @@ def crawl_coin_market(unix_now)
   coin_market = Nokogiri::HTML(open(ENV['COINMARKET_URL']))
   rows = coin_market.xpath('//table/tbody/tr')
 
-  coins_hash = {}
-
   rows.each do |row|
     coin_hash = ATTTRIBUTES.inject({}) do |hash, attribute|
       if !row.at_css('.' + attribute).nil?
@@ -36,10 +35,8 @@ def crawl_coin_market(unix_now)
       hash
     end
 
-    coins_hash.merge!({"#{coin_hash[:currency_name]}:#{unix_now}" => coin_hash.to_json})
+    redis.setex("#{coin_hash[:currency_name]}:#{unix_now}", LIMIT_SEC_FOR_25M, coin_hash.to_json)
   end
-
-  redis.mapped_mset(coins_hash)
 end
 
 ######################
