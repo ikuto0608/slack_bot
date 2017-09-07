@@ -27,9 +27,12 @@ def crawl_coin_market(unix_now)
 
   rows.each do |row|
     coin_hash = ATTTRIBUTES.inject({}) do |hash, attribute|
-      hash.merge!(
-        { "#{attribute.gsub('-', '_')}".to_sym => row.at_css('.' + attribute).text.strip }
-      )
+      if !row.at_css('.' + attribute).nil?
+        hash.merge!(
+          { "#{attribute.gsub('-', '_')}".to_sym => row.at_css('.' + attribute).text.strip }
+        )
+      end
+
       hash
     end
 
