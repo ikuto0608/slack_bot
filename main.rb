@@ -122,7 +122,7 @@ end
 ## redis instance
 ######################
 def redis
-  @redis || Redis.new
+  @redis ||= Redis.new
 end
 
 ######################
