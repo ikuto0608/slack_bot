@@ -65,7 +65,7 @@ def up_down_check(unix_now)
       target_history = c
       target_price = c['price'].dup
       target_price.slice!('$')
-      !((latest_price.to_f / target_price.to_f) * 100).to_i.between?(90, 110)
+      !((latest_price.to_f / target_price.to_f) * 100).to_i.between?(85, 115)
     end
 
     if happening
