@@ -10,7 +10,7 @@ require 'slack-ruby-client'
 require "redis"
 
 ATTTRIBUTES = ['currency-name', 'market-cap', 'price', 'volume', 'percent-24h']
-LIMIT_SEC_FOR_25M = 331200
+LIMIT_SEC_FOR_25M = 531200
 
 Slack.configure do |config|
   config.token = ENV['SLACK_API_TOKEN']
