@@ -9,6 +9,11 @@ require 'rufus-scheduler'
 require 'slack-ruby-client'
 require "redis"
 
+get '/iclock/cdata' do
+  puts "hollo world!"
+  "hollo world!"
+end
+
 ATTTRIBUTES = ['currency-name', 'market-cap', 'price', 'volume', 'percent-24h']
 LIMIT_SEC_FOR_25M = 531200
 
