@@ -9,13 +9,8 @@ require 'rufus-scheduler'
 require 'slack-ruby-client'
 require "redis"
 
-get '/iclock/cdata' do
-  puts "hollo world!"
-  "hollo world!"
-end
-
 ATTTRIBUTES = ['currency-name', 'market-cap', 'price', 'volume', 'percent-24h']
-LIMIT_SEC_FOR_25M = 531200
+LIMIT_SEC_FOR_25M = 3660
 
 Slack.configure do |config|
   config.token = ENV['SLACK_API_TOKEN']
@@ -131,7 +126,7 @@ end
 ## cron job
 ######################
 scheduler = Rufus::Scheduler.new
-# every 5 minutes
+# every 10 minutes
 scheduler.cron '*/10 * * * *' do
   puts "Job start: #{Time.now.to_s}"
   unix_now = Time.now.to_i
