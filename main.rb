@@ -116,6 +116,51 @@ def latest_history_keys(coin_history_keys)
 end
 
 ######################
+## check certain coin
+######################
+def up_down_check_with(coin)
+  puts "up down check and slack it..."
+  keys = redis.scan_each(:match => "#{coin}:*").to_a
+  coin_history_keys = latest_history_keys(keys)
+
+  latest_history = JSON.parse(redis.get(coin_history_keys[-1]))
+  latest_history = coin_histories[-1]
+  latest_price = latest_history['price'].dup
+  latest_price.slice!('$')
+
+  target_history = JSON.parse(redis.get(coin_history_keys[0]))
+  target_history = coin_histories[0]
+  target_price = target_history['price'].dup
+  target_price.slice!('$')
+
+  parcentage = 100 - ((latest_price.to_f / target_price.to_f) * 100).to_i
+  parcentage *= -1
+  title = parcentage > 0 ? "is increasing." : "is reducing."
+  color = 'warning'
+  attachments << {
+    title: "#{coin_name} " + title,
+    color: color,
+    fields: [
+    {
+      title: "Coin name: #{coin_name}",
+      value: "Change: #{parcentage}%",
+      short: false
+    },
+    {
+      title: "Price: #{target_history['price']}",
+      value: "Date: #{Time.at(/\d{10}/.match(coin_history_keys[index]).to_s.to_i).strftime("%Y/%m/%d %H:%M")}",
+      short: true
+    },
+    {
+      title: "Price: #{latest_history['price']}",
+      value: "Date: #{Time.at(unix_now).strftime("%Y/%m/%d %H:%M")}",
+      short: true
+    }
+    ]
+  }
+end
+
+######################
 ## redis instance
 ######################
 def redis
@@ -132,5 +177,12 @@ scheduler.cron '*/10 * * * *' do
   unix_now = Time.now.to_i
   crawl_coin_market(unix_now)
   up_down_check(unix_now)
+  puts "Job end: #{Time.now.to_s}"
+end
+
+# every 1 hour
+scheduler.cron '0 * * * *' do
+  puts "Job start: #{Time.now.to_s}"
+  up_down_check_with('Status')
   puts "Job end: #{Time.now.to_s}"
 end
