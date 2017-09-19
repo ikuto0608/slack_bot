@@ -113,7 +113,7 @@ end
 def latest_history_keys(coin_history_keys)
   latest_unixtimes = coin_history_keys.map {|coin_history_key| /\d{10}/.match(coin_history_key).to_s.to_i }
   latest_unixtimes = latest_unixtimes.sort
-  latest_unixtimes = latest_unixtimes.count >= 6 ? latest_unixtimes[-6..-1] : []
+  latest_unixtimes = latest_unixtimes.count >= 6 ? latest_unixtimes[-6..-1] : latest_unixtimes
   latest_unixtimes.map {|unixtime| coin_history_keys.select {|coin_history_key| coin_history_key.include?(unixtime.to_s) } }.flatten
 end
 
