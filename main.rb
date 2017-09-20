@@ -148,12 +148,12 @@ def up_down_check_with(coin)
     },
     {
       title: "Price: #{target_history['price']}",
-      value: "Date: #{Time.at(/\d{10}/.match(coin_history_keys[index]).to_s.to_i).strftime("%Y/%m/%d %H:%M")}",
+      value: "Date: #{Time.at(/\d{10}/.match(coin_history_keys[-1]).to_s.to_i).strftime("%Y/%m/%d %H:%M")}",
       short: true
     },
     {
       title: "Price: #{latest_history['price']}",
-      value: "Date: #{Time.at(unix_now).strftime("%Y/%m/%d %H:%M")}",
+      value: "Date: #{Time.at(/\d{10}/.match(coin_history_keys[0]).to_s.to_i).strftime("%Y/%m/%d %H:%M")}",
       short: true
     }
     ]
