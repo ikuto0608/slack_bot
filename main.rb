@@ -138,11 +138,11 @@ def up_down_check_with(coin)
   title = parcentage > 0 ? "is increasing." : "is reducing."
   color = 'warning'
   attachment = {
-    title: "#{coin_name} " + title,
+    title: "#{coin} " + title,
     color: color,
     fields: [
     {
-      title: "Coin name: #{coin_name}",
+      title: "Coin name: #{coin}",
       value: "Change: #{parcentage}%",
       short: false
     },
