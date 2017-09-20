@@ -137,7 +137,7 @@ def up_down_check_with(coin)
   parcentage *= -1
   title = parcentage > 0 ? "is increasing." : "is reducing."
   color = 'warning'
-  attachments << {
+  attachment = {
     title: "#{coin_name} " + title,
     color: color,
     fields: [
@@ -158,6 +158,13 @@ def up_down_check_with(coin)
     }
     ]
   }
+
+  client = Slack::Web::Client.new
+  client.chat_postMessage(
+    channel: ENV['CHANNEL'],
+    as_user: true,
+    attachments: [attachment]
+  )
 end
 
 ######################
