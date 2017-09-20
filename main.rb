@@ -121,7 +121,7 @@ end
 ## check certain coin
 ######################
 def up_down_check_with(coin)
-  puts "up down check and slack it..."
+  puts "up down check #{coin} and slack it..."
   keys = redis.scan_each(:match => "#{coin}:*").to_a
   coin_history_keys = latest_history_keys(keys)
 
