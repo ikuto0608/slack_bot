@@ -35,6 +35,8 @@ def crawl_coin_market(unix_now)
       hash
     end
 
+    coin_hash[:currency_name] = coin_hash[:currency_name].split("\n")[-1]
+    coin_hash[:currency_name].strip!
     redis.setex("#{coin_hash[:currency_name]}:#{unix_now}", LIMIT_SEC_FOR_25M, coin_hash.to_json)
   end
 end
