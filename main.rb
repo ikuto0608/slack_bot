@@ -136,7 +136,6 @@ def up_down_check_with(coin)
   target_price.slice!('$')
 
   parcentage = 100 - ((latest_price.to_f / target_price.to_f) * 100).to_i
-  parcentage *= -1
   title = parcentage > 0 ? "is increasing." : "is reducing."
   color = 'warning'
   attachment = {
@@ -193,5 +192,6 @@ end
 scheduler.cron '0 * * * *' do
   puts "Job start: #{Time.now.to_s}"
   up_down_check_with('Status')
+  up_down_check_with('Gnosis')
   puts "Job end: #{Time.now.to_s}"
 end
