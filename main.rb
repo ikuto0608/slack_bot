@@ -192,6 +192,6 @@ end
 scheduler.cron '0 * * * *' do
   puts "Job start: #{Time.now.to_s}"
   up_down_check_with('Status')
-  up_down_check_with('Gnosis')
+  #up_down_check_with('Gnosis')
   puts "Job end: #{Time.now.to_s}"
 end
