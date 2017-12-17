@@ -191,7 +191,6 @@ end
 # every 1 hour
 scheduler.cron '0 * * * *' do
   puts "Job start: #{Time.now.to_s}"
-  up_down_check_with('Status')
-  up_down_check_with('Storj')
+  #up_down_check_with('Status')
   puts "Job end: #{Time.now.to_s}"
 end
